@@ -1,0 +1,116 @@
+buildscript {
+	ext {
+		springBootVersion = '2.0.4.RELEASE'
+		elasticSearch='5.6.12'
+	}
+	repositories {
+		mavenCentral()
+	}
+	dependencies {
+		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+	}
+}
+
+apply plugin: 'java'
+apply plugin: 'war'
+apply plugin: 'eclipse'
+apply plugin: 'org.springframework.boot'
+apply plugin: 'io.spring.dependency-management'
+
+version = '0.1'
+sourceCompatibility = 1.8
+
+
+
+repositories {
+	mavenCentral()
+	maven { url "http://maven.wso2.org/nexus/content/groups/wso2-public" }
+	
+}
+
+project.ext{
+	springVersion = "4.3.0.RELEASE"
+	log4jVersion = "2.7"
+	jacksonVersion = "2.8.1"
+	poiVersion = '3.17'
+}
+
+dependencyManagement {
+	imports {
+		mavenBom 'com.amazonaws:aws-java-sdk-bom:1.11.133'
+//		mavenBom 'com.amazonaws:aws-java-sdk-bom:1.11.228'
+	}
+}
+
+
+dependencies {
+	compile group: 'org.apache.httpcomponents', name: 'httpcore', version: '4.4.12'
+		compile('org.springframework.boot:spring-boot-starter-data-rest')
+		compile('org.springframework.boot:spring-boot-starter-web-services')
+		compile('org.springframework.boot:spring-boot-starter-jdbc')
+		compile('org.apache.tomcat.embed:tomcat-embed-jasper')
+		compile("org.apache.logging.log4j:log4j-api:${project.log4jVersion}")
+  	compile("org.apache.logging.log4j:log4j-core:${project.log4jVersion}")
+  	compile ("org.apache.logging.log4j:log4j-slf4j-impl:${project.log4jVersion}")
+  	compile ("org.apache.logging.log4j:log4j-jcl:${project.log4jVersion}")
+  	compile('org.springframework.boot:spring-boot-starter-aop')
+  	compile ('org.json:json:20171018')
+		compile("org.springframework.boot:spring-boot-starter-actuator")
+		compile('org.springframework.boot:spring-boot-starter-test')
+		
+		compile('org.springframework.kafka:spring-kafka')
+		
+		compile group: 'org.jdom', name: 'jdom2', version: '2.0.6'
+		
+		compile("org.apache.poi:poi:${poiVersion}")
+    compile("org.apache.poi:poi-ooxml:${poiVersion}")
+    compile "com.fasterxml.jackson.datatype:jackson-datatype-json-org:${project.jacksonVersion}"
+	
+	compile('org.wso2.carbon:org.wso2.carbon.identity.sso.agent:1.2.0')
+
+  	compile('org.wso2.carbon:org.wso2.carbon.authenticator.stub:4.2.0')
+  	compile('org.wso2.carbon:org.wso2.carbon.um.ws.api.stub:4.2.2')
+  
+   	// https://mvnrepository.com/artifact/org.springframework/spring-test
+   	//testCompile group: 'org.springframework', name: 'spring-test', version: '2.5'
+      
+		compile group: 'org.postgresql', name: 'postgresql', version: '42.2.8'
+		testCompile('org.springframework.boot:spring-boot-starter-test')
+	
+	
+	
+		// https://mvnrepository.com/artifact/xalan/serializer
+		compile group: 'xalan', name: 'serializer', version: '2.7.1'
+		// https://mvnrepository.com/artifact/xerces/xercesImpl
+		compile group: 'xerces', name: 'xercesImpl', version: '2.7.1'
+		// https://mvnrepository.com/artifact/xalan/xalan
+		compile group: 'xalan', name: 'xalan', version: '2.7.1'
+		compile('org.springframework.kafka:spring-kafka')
+		compile group: 'org.apache.tomcat', name: 'tomcat-jdbc', version: '9.0.10'
+		compile group: 'com.fasterxml.uuid', name: 'java-uuid-generator', version: '3.1.5'
+		compile group: 'com.google.guava', name: 'guava', version: '23.5-jre'
+	 	compile group: 'org.apache.commons', name: 'commons-lang3', version: '3.6'
+    compile group: 'org.apache.tomcat.embed', name: 'tomcat-embed-jasper', version: '9.0.11'
+		compile group: 'com.google.guava', name: 'guava', version: '23.0'
+	
+		//cost allocation dependencies
+		compile group: 'org.json', name: 'json', version: '20180813'
+		compile group: 'org.antlr', name: 'antlr4-runtime', version: '4.7.1'
+		compile group: 'org.apache.tomcat', name: 'tomcat-jdbc', version: '9.0.10'
+	
+		compile fileTree(dir: 'lib', include: '*.jar')
+		compile fileTree(dir: 'InputFolder', include: '*.txt')
+		
+
+}
+
+configurations {
+  all*.exclude module: "logback-classic"
+  all*.exclude module: "logback-core"
+  all*.exclude module: "log4j-over-slf4j"
+  all*.exclude module: "jul-to-slf4j"
+  all*.exclude module: "jcl-over-slf4j"
+  all*.exclude module: 'spring-boot-starter-logging'
+  all*.exclude module: "openid4java-consumer"
+  all*.exclude group: 'org.apache.httpcomponents.wso2'
+}
